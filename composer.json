@@ -1,0 +1,30 @@
+{
+    "name": "situ/svensk-sport-administration",
+    "description": "Ett administrationssystem for Svenska Sportklubbar.",
+    "type": "project",
+    "license": "AGPL-3.0-or-later",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "Peter Myllykoski",
+            "email": "peter.myllykoski@sstumlarna.se",
+            "role": "Projektledare, Systemarkitekt, Utvecklare, Testare"
+        }
+    ],
+    "require": {
+        "php": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "SSA\\": "src/"
+        }
+    },
+    "require-dev": {
+            "phpunit/phpunit": "^12.5.4"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\SSA\\": "test/"
+        }
+    }
+}
