@@ -10,10 +10,11 @@ use SSA\middleware\CorsMiddleware;
 
 class CorsMiddlewareTest extends TestCase
 {
+    private array $corsConfig;
     protected function setUp(): void
     {
         parent::setUp();
-        $this->options = [
+        $this->corsConfig = [
             'allow_origin' => ['https://www.example.com'],
             'allow_methods' => ['GET, POST, PUT, DELETE'],
             'allow_headers' => ['Content-Type', 'Authorization'],
@@ -22,7 +23,7 @@ class CorsMiddlewareTest extends TestCase
 
     public function testAddsCorsHeadersToNormalRequest()
     {
-        $middleware = new CorsMiddleware($this->options);
+        $middleware = new CorsMiddleware($this->corsConfig);
         $request = new ServerRequest('GET', '/test');
         $handler = $this->createMock(RequestHandlerInterface::class);
         $handler->method('handle')->willReturn(new Response(200));
@@ -34,7 +35,7 @@ class CorsMiddlewareTest extends TestCase
 
     public function testHandlesOptionsRequest()
     {
-        $middleware = new CorsMiddleware($this->options);
+        $middleware = new CorsMiddleware($this->corsConfig);
         $request = new ServerRequest('OPTIONS', '/test');
         $handler = $this->createMock(RequestHandlerInterface::class);
         $handler->expects($this->never())->method('handle');
