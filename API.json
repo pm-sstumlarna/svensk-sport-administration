@@ -1,0 +1,1751 @@
+{
+  "openapi": "3.1.2",
+  "info": {
+    "title": "Svensk Sport Administration API",
+    "description": "API specification for managing sports associations, members, activities, and finances.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8081",
+      "description": "Development server (No authentication required)"
+    }
+  ],
+  "paths": {
+    "/organizations": {
+      "get": {
+        "summary": "List organizations",
+        "description": "Returns a list of organizations.",
+        "tags": [
+          "Organization Management"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of organizations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Organization"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Organization not found"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create new organization",
+        "tags": [
+          "Organization Management"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Organization"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/organizations/{orgId}": {
+      "parameters": [
+        {
+          "name": "orgId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "uuid"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Get organization",
+        "tags": [
+          "Organization Management"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Organization"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update organization",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Organization"
+              }
+            }
+          }
+        },
+        "tags": [
+          "Organization Management"
+        ]
+      },
+      "delete": {
+        "summary": "Delete organization",
+        "tags": [
+          "Organization Management"
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Organization"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{orgId}/board": {
+      "get": {
+        "summary": "Get board",
+        "tags": [
+          "Organization Management"
+        ]
+      },
+      "put": {
+        "summary": "Update board",
+        "tags": [
+          "Organization Management"
+        ]
+      }
+    },
+    "/organizations/{orgId}/members": {
+      "get": {
+        "summary": "Get members",
+        "tags": [
+          "Member Management"
+        ]
+      },
+      "post": {
+        "summary": "Add member",
+        "tags": [
+          "Member Management"
+        ]
+      }
+    },
+    "/organizations/{orgId}/mebers/{memberId}": {
+      "get": {
+        "tags": [
+          "Member Management"
+        ]
+      },
+      "put": {
+        "tags": [
+          "Member Management"
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Member Management"
+        ]
+      }
+    },
+    "/organizations/{orgId}/syllabuses": {
+      "get": {
+        "summary": "List syllabuses",
+        "description": "Returns a list of all syllabuses (e.g. swim school).",
+        "tags": [
+          "Education Planning"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of syllabuses",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Syllabus"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a syllabus",
+        "description": "Creates a new syllabus with goals and prerequisites.",
+        "tags": [
+          "Education Planning"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Syllabus"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Syllabus created"
+          }
+        }
+      }
+    },
+    "/organizations/{orgId}/syllabuses/{syllabusId}": {
+      "get": {
+        "summary": "Get syllabus details",
+        "tags": [
+          "Education Planning"
+        ],
+        "parameters": [
+          {
+            "name": "syllabusId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Syllabus details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Syllabus"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Syllabus not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a syllabus",
+        "description": "Updates an existing syllabus.",
+        "tags": [
+          "Education Planning"
+        ],
+        "parameters": [
+          {
+            "name": "syllabusId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Syllabus"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Syllabus updated"
+          },
+          "404": {
+            "description": "Syllabus not found"
+          }
+        }
+      }
+    },
+    "/organizations/{orgId}/courses": {
+      "get": {
+        "summary": "List courses",
+        "description": "Returns a list of all courses.",
+        "tags": [
+          "Education Planning"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of courses",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Course"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a course",
+        "description": "Creates a new course based on a syllabus.",
+        "tags": [
+          "Education Planning"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Course"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Course created"
+          }
+        }
+      }
+    },
+    "/organizations/{orgId}/courses/{courseId}": {
+      "get": {
+        "summary": "Get course details",
+        "tags": [
+          "Education Planning"
+        ],
+        "parameters": [
+          {
+            "name": "courseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Course details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Course"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Course not found"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Education Planning"
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Education Planning"
+        ]
+      }
+    },
+    "/persons/import": {
+      "post": {
+        "summary": "Import Person Data",
+        "description": "Imports person data from a file (FK1.1).",
+        "tags": [
+          "NaturalPerson Management"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/ImportFile"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Import successful"
+          }
+        }
+      }
+    },
+    "/persons/export": {
+      "get": {
+        "summary": "Export persons",
+        "description": "Exports person data to a CSV/Excel file (FK1.1).",
+        "tags": [
+          "NaturalPerson Management"
+        ],
+        "responses": {
+          "200": {
+            "description": "Exported file",
+            "content": {
+              "text/csv": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/activities/calendar.ics": {
+      "get": {
+        "summary": "Export calendar",
+        "description": "Returns an iCalendar file with activities (FK2.2).",
+        "tags": [
+          "Activity and Planning"
+        ],
+        "responses": {
+          "200": {
+            "description": "iCalendar file",
+            "content": {
+              "text/calendar": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/activities/{activityId}/invitations": {
+      "post": {
+        "summary": "Send invitations",
+        "description": "Sends invitations to a specific activity (FK2.4).",
+        "tags": [
+          "Activity and Planning"
+        ],
+        "parameters": [
+          {
+            "name": "activityId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Invitations sent"
+          }
+        }
+      }
+    },
+    "/activities/{activityId}/invitations/{naturalPersonId}": {
+      "patch": {
+        "summary": "Respond to invitation",
+        "description": "Allows a person to respond to an activity invitation (FK2.4).",
+        "tags": [
+          "Activity and Planning"
+        ],
+        "parameters": [
+          {
+            "name": "activityId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "naturalPersonId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": {
+                      "anyOf": [
+                        "Pending",
+                        "Accepted",
+                        "Declined"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response recorded"
+          }
+        }
+      }
+    },
+    "/persons": {
+      "get": {
+        "summary": "List all persons",
+        "description": "Returns a list of all persons in the system (FK1.3).",
+        "tags": [
+          "NaturalPerson Management"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of persons",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NaturalPerson"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new person",
+        "description": "Creates a new person record (FK1.2).",
+        "tags": [
+          "NaturalPerson Management"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NaturalPerson"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Person created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NaturalPerson"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/persons/{naturalPersonId}": {
+      "get": {
+        "summary": "Get person details",
+        "tags": [
+          "NaturalPerson Management"
+        ],
+        "parameters": [
+          {
+            "name": "naturalPersonId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Person details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NaturalPerson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update person",
+        "tags": [
+          "NaturalPerson Management"
+        ],
+        "parameters": [
+          {
+            "name": "naturalPersonId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NaturalPerson"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Person updated"
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete person",
+        "tags": [
+          "Persons Management"
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/persons/{naturalPersonId}/family": {
+      "get": {
+        "description": "Get persons family",
+        "tags": [
+          "NaturalPerson Management"
+        ]
+      },
+      "post": {
+        "description": "Add family member",
+        "tags": [
+          "NaturalPerson Management"
+        ]
+      }
+    },
+    "/activities": {
+      "get": {
+        "summary": "List activities",
+        "description": "Returns a list of activities/events (FK2.1).",
+        "tags": [
+          "Activity and Planning"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of activities",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Activity"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create an activity",
+        "description": "Creates a new activity (FK2.1).",
+        "tags": [
+          "Activity and Planning"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Activity"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Activity created"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update an activity",
+        "description": "Updates an existing activity (FK2.1).",
+        "tags": [
+          "Activity and Planning"
+        ],
+        "parameters": [
+          {
+            "name": "activityId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Activity"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Activity updated"
+          },
+          "404": {
+            "description": "Activity not found"
+          }
+        }
+      }
+    },
+    "/activities/{activityId}": {
+      "get": {
+        "summary": "Get activity details",
+        "tags": [
+          "Activity and Planning"
+        ],
+        "parameters": [
+          {
+            "name": "activityId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Activity details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Activity"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Activity not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update activity",
+        "tags": [
+          "Activity and Planning"
+        ],
+        "parameters": [
+          {
+            "name": "activityId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Activity"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Activity updated"
+          },
+          "404": {
+            "description": "Activity not found"
+          }
+        }
+      }
+    },
+    "/activities/{activityId}/attendance": {
+      "get": {
+        "summary": "Get attendance for an activity",
+        "tags": [
+          "Activity and Planning"
+        ],
+        "parameters": [
+          {
+            "name": "activityId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attendance list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Attendance"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Register attendance",
+        "description": "Registers attendance for participants (FK2.3).",
+        "tags": [
+          "Activity and Planning"
+        ],
+        "parameters": [
+          {
+            "name": "activityId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Attendance"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Attendance registered"
+          }
+        }
+      }
+    },
+    "/invoices": {
+      "get": {
+        "summary": "List invoices",
+        "description": "Returns a list of invoices (FK3.2).",
+        "tags": [
+          "Economy"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of invoices",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Invoice"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Generate invoices",
+        "description": "Generates new invoices (FK3.1).",
+        "tags": [
+          "Economy"
+        ],
+        "responses": {
+          "201": {
+            "description": "Invoices generated"
+          }
+        }
+      }
+    },
+    "/reports/lok-support": {
+      "get": {
+        "summary": "Generate LOK-support report",
+        "description": "Generates data for LOK-support applications (FK5.1).",
+        "tags": [
+          "Statistics and Reporting"
+        ],
+        "responses": {
+          "200": {
+            "description": "LOK-support report data"
+          }
+        }
+      }
+    },
+    "/groups": {
+      "get": {
+        "summary": "List groups",
+        "description": "Returns a list of all groups (teams).",
+        "tags": [
+          "Group Management"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of groups",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Group"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/messages": {
+      "post": {
+        "summary": "Send a message",
+        "description": "Sends a message (email/notification) to individuals or groups (FK4.1).",
+        "tags": [
+          "Communication"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "recipientIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "uuid"
+                    }
+                  },
+                  "groupIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "uuid"
+                    }
+                  },
+                  "subject": {
+                    "type": "string"
+                  },
+                  "body": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Message accepted for delivery"
+          }
+        }
+      }
+    },
+    "/persons/{naturalPersonId}/goals": {
+      "get": {
+        "summary": "List goals for a person",
+        "description": "Returns goals and results for a specific person (FK6.1, FK6.2).",
+        "tags": [
+          "NaturalPerson Management"
+        ],
+        "parameters": [
+          {
+            "name": "naturalPersonId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of goals and results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GoalResult"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a goal/result",
+        "description": "Documents a new training goal or result (FK6.1, FK6.2).",
+        "tags": [
+          "NaturalPerson Management"
+        ],
+        "parameters": [
+          {
+            "name": "naturalPersonId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GoalResult"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Goal/Result created"
+          }
+        }
+      }
+    },
+    "/persons/{naturalPersonId}/bookings": {
+      "get": {
+        "summary": "List bookings for a person",
+        "description": "Returns all bookings that a person is linked to.",
+        "tags": [
+          "NaturalPerson Management"
+        ],
+        "parameters": [
+          {
+            "name": "naturalPersonId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of bookings",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Booking"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Person not found"
+          }
+        }
+      }
+    },
+    "/syllabuses": {
+    },
+    "/syllabuses/{syllabusId}": {
+    },
+    "/courses": {
+    },
+    "/courses/{courseId}": {
+    },
+    "/bookings": {
+      "get": {
+        "summary": "List all bookings",
+        "tags": [
+          "Booking Management"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of bookings",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Booking"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new booking",
+        "tags": [
+          "Booking Management"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Booking"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Booking created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Booking"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bookings/{bookingId}": {
+      "get": {
+        "summary": "Get booking details",
+        "tags": [
+          "Booking Management"
+        ],
+        "parameters": [
+          {
+            "name": "bookingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Booking details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Booking"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Booking not found"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update booking status",
+        "description": "Updates the status of a booking (e.g., from Pending to Confirmed).",
+        "tags": [
+          "Booking Management"
+        ],
+        "parameters": [
+          {
+            "name": "bookingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": {
+                      "anyOf": [
+                        "Pending",
+                        "Confirmed",
+                        "Canceled"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Booking updated"
+          },
+          "404": {
+            "description": "Booking not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "Keycloak": {
+        "type": "openIdConnect",
+        "openIdConnectUrl": "https://idp.situ.se/realms/ss-tumlarna/.well-known/openid-configuration"
+      }
+    },
+    "schemas": {
+      "ImportFile": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "description": "The file containing person data to be imported"
+          }
+        },
+        "required": [
+          "file"
+        ]
+      },
+      "Organization": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "name": {
+            "type": "string"
+          },
+          "orgNumber": {
+            "type": "string"
+          },
+          "emails": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "format": "email"
+                },
+                "isPrimary": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "phones": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "phoneNumber": {
+                  "type": "string"
+                },
+                "isPrimary": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "address": {
+            "type": "string"
+          },
+          "website": {
+            "type": "string",
+            "format": "uri"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "NaturalPerson": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "personalIdentityNumber": {
+            "type": "string",
+            "description": "SSN"
+          },
+          "emails": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "format": "email"
+                },
+                "isPrimary": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "phones": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "phoneNumber": {
+                  "type": "string"
+                },
+                "isPrimary": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "addresses": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "street": {
+                  "type": "string"
+                },
+                "zipCode": {
+                  "type": "string"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "country": {
+                  "type": "string"
+                },
+                "isPrimary": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "passedCourses": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "courseId": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "passedAt": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "Member",
+                "Guardian",
+                "Teacher"
+              ]
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          }
+        },
+        "required": [
+          "firstName",
+          "lastName"
+        ]
+      },
+      "Activity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "groupId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "startTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "location": {
+            "type": "string"
+          },
+          "activityType": {
+            "type": "string",
+            "enum": [
+              "Träning",
+              "Match",
+              "Möte",
+              "Övrigt"
+            ]
+          }
+        },
+        "required": [
+          "title",
+          "startTime",
+          "endTime"
+        ]
+      },
+      "Attendance": {
+        "type": "object",
+        "properties": {
+          "activityId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "naturalPersonId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Närvarande",
+              "Frånvarande",
+              "Anmäld"
+            ]
+          },
+          "comment": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "activityId",
+          "naturalPersonId",
+          "status"
+        ]
+      },
+      "Invoice": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "membershipId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "amount": {
+            "type": "number",
+            "format": "float"
+          },
+          "due_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Betald",
+              "Obetald",
+              "Förfallen"
+            ]
+          },
+          "reference_number": {
+            "type": "string"
+          }
+        }
+      },
+      "Group": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "organizationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "GoalResult": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "naturalPersonId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "targetValue": {
+            "type": "string"
+          },
+          "actualValue": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Pågående",
+              "Uppnått",
+              "Ej uppnått"
+            ]
+          }
+        },
+        "required": [
+          "title"
+        ]
+      },
+      "Syllabus": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "goals": {
+            "type": "string",
+            "description": "Outline of the syllabus purpose and content."
+          },
+          "prerequisites": {
+            "type": "string",
+            "description": "Requirements to follow the syllabus."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "lastUpdate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          }
+        },
+        "required": [
+          "title"
+        ]
+      },
+      "Course": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "syllabusId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "teacher": {
+            "type": "string"
+          },
+          "speed": {
+            "type": "string",
+            "description": "Speed of the course (e.g. 100%, 50%)."
+          },
+          "lectureCount": {
+            "type": "integer",
+            "description": "Number of lectures."
+          },
+          "detailedPlan": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "lectureNumber": {
+                  "type": "integer"
+                },
+                "content": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Detailed plan for each lecture."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          }
+        },
+        "required": [
+          "syllabusId",
+          "teacher"
+        ]
+      },
+      "Booking": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "naturalPersonId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "courseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "guardianName": {
+            "type": "string",
+            "description": "Required if person is a minor."
+          },
+          "guardianEmail": {
+            "type": "string",
+            "format": "email"
+          },
+          "guardianPhone": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Pending",
+              "Confirmed",
+              "Cancelled"
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          }
+        },
+        "required": [
+          "naturalPersonId",
+          "courseId"
+        ]
+      }
+    }
+  }
+}
