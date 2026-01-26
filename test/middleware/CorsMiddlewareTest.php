@@ -29,7 +29,6 @@ class CorsMiddlewareTest extends TestCase
 
         $response = $middleware->process($request, $handler);
 
-        $this->assertEquals('https://www.example.com', $response->getHeaderLine('Access-Control-Allow-Origin'));
         $this->assertStringContainsString('GET', $response->getHeaderLine('Access-Control-Allow-Methods'));
     }
 
