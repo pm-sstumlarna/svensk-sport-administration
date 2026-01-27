@@ -25,7 +25,7 @@ class CorsMiddlewareTest extends TestCase
     {
         $middleware = new CorsMiddleware($this->corsConfig);
         $request = new ServerRequest('GET', '/test');
-        $handler = $this->createMock(RequestHandlerInterface::class);
+        $handler = $this->createStub(RequestHandlerInterface::class);
         $handler->method('handle')->willReturn(new Response(200));
 
         $response = $middleware->process($request, $handler);
