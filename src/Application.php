@@ -7,6 +7,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use SSA\middleware\CorsMiddleware;
+use Throwable;
 
 class Application implements RequestHandlerInterface, MiddlewareInterface
 {
@@ -19,20 +21,25 @@ class Application implements RequestHandlerInterface, MiddlewareInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $content = [
-            'message' => 'Svensk Sport Administration är under utveckling',
-            'version' => '0.0.1',
-            'config' => $this->configuration,
-        ];
+        $middlewarePipe = new MiddlewarePipe();
+        $corsMiddleware = new CorsMiddleware($this->configuration['cors']);
 
-        $headers = ['Content-Type' => 'application/json'];
-        $body = json_encode($content);
+        $middlewarePipe->pipe($this);
+        $middlewarePipe->pipe($corsMiddleware);
 
-        return new Response(200, $headers, $body);
+        return $middlewarePipe->handle($request);
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        return $handler->handle($request);
+        try {
+            return $handler->handle($request);
+        } catch (Throwable $e) {
+            $headers = [
+                'Content-Type' => 'application/json'
+            ];
+            $body = json_encode(['error' => $e->getMessage()]);
+            return new Response(500, $headers, $body);
+        }
     }
 }
