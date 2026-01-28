@@ -10,3 +10,5 @@ att utöva idrott.
 ## Bidra till projektet
 
 ## Test- och utvecklingsmiljö
+
+## Dokumentation
