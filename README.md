@@ -10,5 +10,21 @@ att utöva idrott.
 ## Bidra till projektet
 
 ## Test- och utvecklingsmiljö
+För att bygga en container med utvecklingsmiljön konfigurerad kan du exekvera följande script:
+
+```bash
+$ ./scripts/podman-build.sh
+```
+För att hämta de bibliotek som behövs kan du köra följande kommando:
+
+```bash
+$ ./script/poddman-run.sh composer install
+```
+
+Testerna kan köras med kommandot:
+
+```bash
+$ ./script/podman-run.sh composer test
+```
 
 ## Dokumentation

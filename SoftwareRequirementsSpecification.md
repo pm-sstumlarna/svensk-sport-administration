@@ -162,11 +162,9 @@ olika intressenter interagerar med systemet.
 
 ### UC1. Registrera organisation
 
-### UC2. Importera medlemmar
+### UC2. Importera medlemsregister
 
-### UC3. Registrera styrelse
-
-### UC2. Skapa grupper
+### UC3. Registrera närvaro
 
 ## Kvalitetsattribut
 

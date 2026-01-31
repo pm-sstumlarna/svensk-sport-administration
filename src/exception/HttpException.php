@@ -1,6 +1,6 @@
 <?php
 
-namespace SSA;
+namespace SSA\exception;
 
 use Exception;
 

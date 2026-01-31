@@ -15,8 +15,15 @@
          displayDetailsOnPhpunitDeprecations="true"
          displayDetailsOnPhpunitNotices="true">
     <testsuites>
-        <testsuite name="Unit Test">
-            <directory>test</directory>
+        <testsuite name="Application Unit Tests">
+            <directory>
+                test/unit
+            </directory>
+        </testsuite>
+        <testsuite name="Application Integration Tests">
+            <directory>
+                test/integration
+            </directory>
         </testsuite>
     </testsuites>
 
