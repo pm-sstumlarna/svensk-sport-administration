@@ -2,6 +2,7 @@
 
 namespace SSA\middleware;
 
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -12,9 +13,9 @@ class CorsMiddleware implements MiddlewareInterface
 {
     private array $config;
 
-    public function __construct(array $corsConfig)
+    public function __construct(ContainerInterface $container)
     {
-        $this->config = $corsConfig;
+        $this->config = $container->get('configuration')['cors'];
     }
 
     public function process(Request $request, RequestHandler $handler): Response

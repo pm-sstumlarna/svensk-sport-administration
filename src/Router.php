@@ -3,11 +3,9 @@
 namespace SSA;
 
 use Psr\Http\Message\ServerRequestInterface;
-use SSA\RouteResultInterface;
-use SSA\HttpException;
-use SSA\RouteResult;
+use SSA\exception\HttpException;
 
-class Router
+class Router implements RouterInterface
 {
 
     private array $routes = [];
@@ -18,7 +16,7 @@ class Router
 
     }
 
-    public function route(ServerRequestInterface $request): ?RouteResultInterface
+    public function route(ServerRequestInterface $request): RouteResultInterface
     {
         $method = $request->getMethod();
         $path = $request->getUri()->getPath();

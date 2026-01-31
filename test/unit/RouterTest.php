@@ -2,12 +2,12 @@
 
 namespace Test\SSA\unit;
 
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use SSA\HttpException;
+use SSA\exception\HttpException;
 use SSA\Router;
-use PHPUnit\Framework\TestCase;
 use SSA\RouteResultInterface;
 
 class RouterTest extends TestCase
